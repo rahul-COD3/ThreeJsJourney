@@ -1,6 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import gsap from "gsap";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Cursor
 const cursor = {
@@ -37,17 +38,13 @@ const sizes = {
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.height / sizes.width);
-// const aspectRatio = sizes.width / sizes.height;
-// const camera = new THREE.OrthographicCamera(
-//   -1 * aspectRatio,
-//   1 * aspectRatio,
-//   1,
-//   -1,
-//   0.1,
-//   100
-// );
+
 camera.position.z = 3;
 scene.add(camera);
+
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -58,19 +55,9 @@ renderer.setSize(sizes.width, sizes.height);
 // Clock
 const clock = new THREE.Clock();
 
-// gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
-// gsap.to(mesh.position, { duration: 1, delay: 2, x: 0 });
-
 // Animations
 const tick = () => {
-  //   const elapsedTime = clock.getElapsedTime();
-
-  //   mesh.rotation.y = Math.sin(elapsedTime);
-  //   mesh.rotation.x = Math.cos(elapsedTime);
-
-//   camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
-//   camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
-//   camera.lookAt(mesh.position);
+  controls.update();
   // Render
   renderer.render(scene, camera);
 
